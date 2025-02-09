@@ -1,5 +1,10 @@
 #TASK 6
---  Generate a report which contains the top 5 customers who received an average high  pre_invoice_discount_pct  for the  fiscal  year 2021  and in the Indian  market. 
+-- Q6. Generate a report which contains the top 5 customers who received an average high pre_invoice_discount_pct for the fiscal year 2021 and in the Indian market. 
+-- The final output contains these fields, 
+-- customer_code 
+-- customer 
+-- average_discount_percentage
+	
 SELECT c.customer_code,c.customer,ROUND(AVG(pre_invoice_discount_pct),4) AS average_discount_percentage
 FROM fact_pre_invoice_deductions d
 JOIN dim_customer c ON c.customer_code=d.customer_code
@@ -9,7 +14,13 @@ ORDER BY average_discount_percentage DESC
 LIMIT 5;
 
 #TASK 7 
---  Get the complete report of the Gross sales amount for the customer  “Atliq”  for each month .This analysis helps to  get an idea of low and high-performing months and take strategic decisions. 
+-- Q7. Get the complete report of the Gross sales amount for the customer “Atliq Exclusive” for each month . 
+-- This analysis helps to get an idea of low and high-performing months and take strategic decisions. 
+-- The final report contains these columns: 
+-- Month 
+-- Year 
+-- Gross sales Amount
+	
 WITH temp_table AS (
      SELECT customer,
             monthname(date) AS months,
@@ -26,6 +37,11 @@ WITH temp_table AS (
     ORDER BY year,month_number;
     
     #TASK 8 
+-- Q8. In which quarter of 2020, got the maximum total_sold_quantity? 
+-- The final output contains these fields sorted by the total_sold_quantity,
+-- Quarter 
+-- total_sold_quantity
+	    
 WITH temp_table AS(
    SELECT *,
           CASE 
@@ -43,6 +59,12 @@ WITH temp_table AS(
     ORDER BY total_sold_quantity DESC;
     
     #TASK 9
+-- Q9. Which channel helped to bring more gross sales in the fiscal year 2021 and the percentage of contribution? 
+-- The final output contains these fields, 
+-- channel 
+-- gross_sales_mln 
+-- percentage
+	    
    WITH temp_table AS(
       SELECT c.channel,
       ROUND(SUM(s.sold_quantity*g.gross_price)/1000000,2) AS gross_sales_mln
@@ -60,6 +82,10 @@ WITH temp_table AS(
 	FROM temp_table;
 
 #TASK 10 
+-- Q10. Get the Top 3 products in each division that have a high total_sold_quantity in the fiscal_year 2021? 
+-- The final output contains these fields, 
+-- division 
+-- product_code	
 WITH temp_table AS (
     select division,
     s.product_code, 
