@@ -1,3 +1,5 @@
+#CODEBASICS_SQL_PROJECT_CHALLENGE
+
 -- Provide the list of markets in which customer  "Atliq  Exclusive"  operates its business in the  APAC  region.
 #TASK 1
 SELECT 
@@ -5,7 +7,11 @@ DISTINCT market FROM dim_customer
 WHERE customer="Atliq Exclusive" AND region = 'APAC';
 
 #TASK 2
--- What is the percentage of unique product increase in 2021 vs. 2020?  
+-- Q2 What is the percentage of unique product increase in 2021 vs. 2020? 
+-- The final output contains these fields
+-- unique_products_2020
+-- unique_products_2021
+-- percentage_chg  
 
 WITH unique_products AS (
   SELECT 
@@ -26,16 +32,25 @@ WHERE
     up_2020.fiscal_year=2020 
 AND up_2021.fiscal_year=2021;
 
+
 #TASK 3
- -- Provide a report with all the unique product counts for each  segment  and sort them in descending order of product counts.
+-- Q3. Provide a report with all the unique product counts for each segment and sort them in descending order of product counts. 
+-- The final output contains 2 fields, 
+-- segment 
+-- product_count
 SELECT segment,COUNT(DISTINCT product_code) AS product_count
 FROM dim_product
 GROUP BY segment
 ORDER BY product_count DESC;
 
 #TASK 4
---  Follow-up: Which segment had the most increase in unique products in 2021 vs 2020? The final output contains these fields, 
-
+-- Q4. Follow-up: Which segment had the most increase in unique products in 2021 vs 2020? 
+-- The final output contains these fields, 
+-- segment 
+-- product_count_2020 
+-- product_count_2021 
+-- difference
+	
 WITH temp_table AS (
       SELECT 
           p.segment,
@@ -65,7 +80,12 @@ ORDER BY
    difference DESC;
    
    #TASK 5 
-   --  Get the products that have the highest and lowest manufacturing costs. 
+-- Q5. Get the products that have the highest and lowest manufacturing costs. 
+-- The final output should contain these fields, 
+-- product_code 
+-- product 
+-- manufacturing_cost
+	   
 SELECT m.product_code,CONCAT(product,"(",variant,")") AS product , cost_year,manufacturing_cost
 FROM fact_manufacturing_cost m 
 JOIN dim_product p ON p.product_code=m.product_code
