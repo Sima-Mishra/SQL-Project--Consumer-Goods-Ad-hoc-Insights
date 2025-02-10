@@ -4,4 +4,3 @@ This is a Data Analytics project I have done primarily using SQL (for querying) 
 
 
 
-Link= https://1drv.ms/b/c/2449c1e3aabe59cb/Ef7-HmkCKIFAslDzRAkLtRoBNIbpClmOzpR2T6BcQeD04A?e=2rHNuV
